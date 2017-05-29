@@ -13,6 +13,7 @@ public class MatrixOperations {
         return transposedMatrix;
     }
 
+
     public int findDeterminant(int[][] matrix) throws MatrixException {
         if (matrix != null && (matrix.length == matrix[0].length)) {
             if (matrix.length == 1) {
