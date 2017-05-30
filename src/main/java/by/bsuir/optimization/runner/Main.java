@@ -13,15 +13,30 @@ public class Main {
                 {4, 5, 6},
                 {7, 8, 10}
         };
-        matrixOperations.printMatrix(anotherMatrix);
-        System.out.println();
-        matrixOperations.printMatrix(matrixOperations.transpose(anotherMatrix));
+        int[][] smallMatrix = {
+                {1, 2},
+                {4, 5}
+        };
+
+        int[][] itWillBeOk = {
+                {0, 1, 0, 0},
+                {1, 1, 0, 0},
+                {0, 0, -1, 0},
+                {1, 1, 0, 1},
+        };
+//        matrixOperations.printMatrix(anotherMatrix);
+//        System.out.println();
+//        matrixOperations.printMatrix(matrixOperations.transpose(anotherMatrix));
+//        System.out.println();
+
+        matrixOperations.printMatrix(matrixOperations.fillReducedMatrix(anotherMatrix, 1, 1));
+
         System.out.println();
 
-        matrixOperations.printMatrix(matrixOperations.fillReducedMatrix(anotherMatrix, 0));
 
-        System.out.println();
         try {
+            matrixOperations.printMatrix(matrixOperations.findInverseMatrix(itWillBeOk));
+            System.out.println();
             System.out.println(matrixOperations.findDeterminant(anotherMatrix));
         } catch (MatrixException e) {
             System.out.println(e);

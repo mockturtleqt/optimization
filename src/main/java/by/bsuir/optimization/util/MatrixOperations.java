@@ -13,7 +13,6 @@ public class MatrixOperations {
         return transposedMatrix;
     }
 
-
     public int findDeterminant(int[][] matrix) throws MatrixException {
         if (matrix != null && (matrix.length == matrix[0].length)) {
             if (matrix.length == 1) {
@@ -26,7 +25,7 @@ public class MatrixOperations {
 
             int determinant = 0;
             for (int n = 0; n < matrix[0].length; n++) {
-                determinant += Math.pow(-1, n) * matrix[0][n] * findDeterminant(fillReducedMatrix(matrix, n));
+                determinant += Math.pow(-1, n) * matrix[0][n] * findDeterminant(fillReducedMatrix(matrix, 0, n));
             }
             return determinant;
         } else {
@@ -44,15 +43,28 @@ public class MatrixOperations {
         return matrix;
     }
 
-    public int[][] fillReducedMatrix(int[][] matrix, int excludedColumnNumber) {
+    public int[][] findInverseMatrix(int[][] matrix) throws MatrixException {
+        int[][] cofactorMatrix = new int[matrix.length][matrix[0].length];
+        for (int m = 0; m < matrix.length; m++) {
+            for (int n = 0; n < matrix[m].length; n++) {
+                cofactorMatrix[m][n] = (int) Math.pow(-1, m + n) * findDeterminant(fillReducedMatrix(matrix, m, n));
+            }
+        }
+        return transpose(cofactorMatrix);
+    }
+
+//    public int[][] multiplyMatrix(int[][] firstMatrix, int[][] secondMatrix) {
+//        for ()
+//    }
+
+    public int[][] fillReducedMatrix(int[][] matrix, int excludedRowNumber, int excludedColumnNumber) {
         int[][] reducedMatrix = new int[matrix.length - 1][matrix[0].length - 1];
+        int matrixRow, matrixColumn;
         for (int m = 0; m < matrix.length - 1; m++) {
+            matrixRow = (m >= excludedRowNumber) ? m + 1 : m;
             for (int n = 0; n < matrix[m].length - 1; n++) {
-                if (n >= excludedColumnNumber) {
-                    reducedMatrix[m][n] = matrix[m + 1][n + 1];
-                } else {
-                    reducedMatrix[m][n] = matrix[m + 1][n];
-                }
+                matrixColumn = (n >= excludedColumnNumber) ? n + 1 : n;
+                reducedMatrix[m][n] = matrix[matrixRow][matrixColumn];
             }
         }
         return reducedMatrix;
